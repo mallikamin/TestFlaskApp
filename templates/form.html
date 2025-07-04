@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>User Form with Location</title>
+</head>
+<body>
+    <h2>User Form</h2>
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+    <form method="POST" onsubmit="return submitForm(event)">
+        <label for="ms_number">MS# (required):</label><br>
+        <input type="text" id="ms_number" name="ms_number" required><br><br>
+
+        <!-- Hidden inputs to store latitude and longitude -->
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+
+            // Check if MS# is filled (HTML5 required attribute also helps)
+            const msNumber = document.getElementById('ms_number').value;
+            if (!msNumber) {
+                alert('Please enter MS#');
+                return false;
+            }
+
+            // Request geolocation permission and get coordinates
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.getElementById('latitude').value = position.coords.latitude;
+                    document.getElementById('longitude').value = position.coords.longitude;
+
+                    // Submit the form after location is set
+                    event.target.submit();
+                }, function(error) {
+                    alert('Location permission denied or unavailable. You can upload location manually.');
+                    // Optionally, you can add a manual location input here or submit without location
+                    event.target.submit();
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+                event.target.submit();
+            }
+
+            return false; // prevent default to wait for location
+        }
+    </script>
+</body>
+</html>
