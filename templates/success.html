@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Success</title>
+    <!-- Redirect after 3 seconds -->
+    <meta http-equiv="refresh" content="3;url={{ url_for('index') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>{{ message }}</h2>
+    <p>You will be redirected to the homepage shortly...</p>
+</body>
+</html>
