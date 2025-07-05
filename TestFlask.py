@@ -26,11 +26,15 @@ def index():
                 writer.writerow(['MS#', 'Latitude', 'Longitude'])
             writer.writerow([ms_number, latitude, longitude])
 
-        print(f"Saved: MS#: {ms_number}, Latitude: {latitude}, Longitude: {longitude}")
-
-        return f"Form submitted successfully! MS#: {ms_number}, Location: ({latitude}, {longitude})"
+        success_message = f"Form submitted successfully! MS#: {ms_number}, Location: ({latitude}, {longitude})"
+        return render_template('success.html', message=success_message)
 
     return render_template('form.html', error=None)
+
+@app.route('/test-success')
+def test_success():
+    return render_template('success.html', message="Test success message")
+
 
 
 if __name__ == '__main__':
